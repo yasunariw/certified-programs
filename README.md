@@ -2,8 +2,8 @@
 
 A small selection of heap-manipulating programs verified in different frameworks.
 
-Currently contains:
+Current targets:
 
-- [HTT](https://github.com/imdea-software/htt)
-- [VST](https://github.com/PrincetonUniversity/VST)
+- [HTT](/htt) ([Project Page](https://github.com/imdea-software/htt))
+- [VST](/vst) ([Project Page](https://github.com/PrincetonUniversity/VST))
 
