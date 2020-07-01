@@ -1,6 +1,7 @@
+
+Require Export VST.floyd.Funspec_old_Notation.
 Require Import VST.floyd.proofauto.
 Require Import listfree.
-Require Export VST.floyd.Funspec_old_Notation.
 Instance CompSpecs : compspecs. make_compspecs prog. Defined.
 Definition Vprog : varspecs. mk_varspecs prog. Defined.
 
@@ -10,8 +11,11 @@ Definition Vprog : varspecs. mk_varspecs prog. Defined.
 This proof doesn't compile!
 
 Key difficulties encountered while translating the SuSLik spec:
-- SuSLik's idealized memory model doesn't care about mixing types in a collection, while C does. Hence, a lot of creative
-  interpretation went into translating the listfree program synthesized by SuSLik into a valid C program.
+- SuSLik's idealized memory model doesn't care about mixing types in a collection, while C does.
+
+  Hence, a lot of creative interpretation went into translating the listfree program synthesized by
+  SuSLik into a valid C program.
+
 - We would have liked to encode predicates as inductive propositions using the Inductive keyword. But VST was more happy
   with encoding them using Fixpoints.
 - To convince Coq that our fixpoints are well-founded, we needed to add a strictly decreasing size parameter - another
