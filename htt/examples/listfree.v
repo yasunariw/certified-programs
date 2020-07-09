@@ -15,6 +15,7 @@ Inductive lseg (x : ptr) (s : seq nat) (h : heap) : Prop :=
   exists heap_lseg_alpha_513,
     s = [:: v] ++ s1 /\ h = x :-> v \+ x .+ 1 :-> nxt \+ heap_lseg_alpha_513 /\ lseg nxt s1 heap_lseg_alpha_513
 .
+
 Definition listfree_type :=
   forall (x : ptr),
   {(S : seq nat)},
@@ -23,6 +24,7 @@ Definition listfree_type :=
           lseg x S h,
       [vfun (_: unit) h =>
           h = empty      ]).
+
 Program Definition listfree : listfree_type :=
   Fix (fun (listfree : listfree_type) x =>
     Do (

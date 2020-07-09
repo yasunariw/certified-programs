@@ -1,6 +1,5 @@
-
-Require Export VST.floyd.Funspec_old_Notation.
 Require Import VST.floyd.proofauto.
+(* Require Export VST.floyd.Funspec_old_Notation. *)
 Require Import listfree.
 Instance CompSpecs : compspecs. make_compspecs prog. Defined.
 Definition Vprog : varspecs. mk_varspecs prog. Defined.
@@ -37,25 +36,25 @@ Possible next steps:
 (* Functional spec of this program.  *)
 
 (* First pass at lseg; is not well-founded because `x = y` is not a properly decreasing argument *)
-(* Fixpoint lseg (x: val) (y: val) (s: list val) : mpred := *)
-(*   if eq_dec x y *)
-(*   then !!(x = y) && !! (s = []) && emp *)
-(*   else !! not(x = y) && *)
-(*           EX nxt:val, EX v:val,  EX s':(list val), *)
-(*             !!(s = v :: s') && *)
-(*             data_at Tsh (tptr tvoid) v x * *)
-(*             data_at Tsh (tptr tvoid) nxt (offset_val 4 x) * *)
-(*             lseg nxt y s'. *)
+Fail Fixpoint lseg (x: val) (null: val) (s: list val) : mpred :=
+  if eq_dec x null
+  then !!(x = null) && !! (s = []) && emp
+  else !! not(x = null) &&
+          EX nxt:val, EX v:val,  EX s':(list val),
+            !!(s = v :: s') &&
+            data_at Tsh (tptr tvoid) v x *
+            data_at Tsh (tptr tvoid) nxt (offset_val 4 x) *
+            lseg nxt null s'.
 
 
 (* This version is well-defined and thus accepted by Coq, but is invalid because it does not match lseg's specification *)
-Fixpoint lseg' (x: val) (y: val) (s: list val) : mpred :=
+Fixpoint lseg' (x: val) (null: val) (s: list val) : mpred :=
   match s with
-  | [] => !!(x = y) && emp
+  | [] => !!(x = null) && emp
   | v :: s' =>
-    !!not(x = y) &&
+    !!not(x = null) &&
     EX nxt:val,
-    data_at Tsh (tptr tvoid) v x * data_at Tsh (tptr tvoid) nxt (offset_val 4 x) * lseg' nxt y s'
+    data_at Tsh (tptr tvoid) v x * data_at Tsh (tptr tvoid) nxt (offset_val 4 x) * lseg' nxt null s'
   end.
 
 (* This well-defined version makes use of an auxiliary heap size indicator that is the fixpoint's decreasing argument *)
@@ -68,7 +67,7 @@ Fixpoint lseg'' (x: val) (y: val) (s: list val) (size: nat) : mpred :=
   | O  => !!(x = y) && !!(s = [])  && emp
   end.
 
-Print offset_val.
+(* Print offset_val. *)
 
 (* Fixes y to zero; however this doesn't work because it does not enforce the constraint length(s) = size *)
 Fixpoint lseg''' (x: val) (s: list val) (size: nat) : mpred :=
@@ -77,30 +76,94 @@ Fixpoint lseg''' (x: val) (s: list val) (size: nat) : mpred :=
     !!not(x = nullval) &&
       EX nxt:val, EX v:val, EX s': list val,
     data_at Tsh (tptr tint) v x * data_at Tsh (tptr tint) nxt (offset_val 4 x) * lseg''' nxt s' size'
-  | O  => !!(x = nullval) && !!(s = nil)  && emp
+  | O  => !!(x = nullval) && !!(s = [])  && emp
+  end.
+
+Fixpoint lseg'''' (x: val) (s: list val) (size: nat) : mpred :=
+  match size with
+  | S size'  =>
+      EX nxt:val, EX v:val, EX s': list val,
+    !!not(x = nullval) &&
+    !! (s = v :: s') &&
+    data_at Tsh (tptr tint) v x * data_at Tsh (tptr tint) nxt (offset_val 4 x) * lseg''' nxt s' size'
+  | O  => !!(x = nullval) && !!(s = [])  && emp
   end.
 
 Fixpoint lseg (x: val) (s: list val) (size: nat) : mpred :=
   match size with
   | S size'  =>
+    EX nxt:val, EX v:val, EX s': list val,
     !!not(x = nullval) &&
-      EX nxt:val, EX v:val, EX s': list val,
-      data_at Tsh (tarray (tptr tint) 2) (v :: nxt :: []) x * lseg nxt s' size'
-    (*data_at Tsh (tptr tint) v x * data_at Tsh (tptr tint) nxt (offset_val 4 x) * lseg nxt s' size'*)
+     !! (s = v :: s') &&
+      data_at Tsh (tarray (tptr tint) 2) (v :: nxt :: []) x *
+      lseg nxt s' size'
+  (*data_at Tsh (tptr tint) v x * data_at Tsh (tptr tint) nxt (offset_val 4 x) * lseg nxt s' size*)
   | O  => !!(x = nullval) && !!(s = nil)  && emp
   end.
-     
+
+(* helper obvious facts *)
+Lemma lseg_lenP x s size :
+  lseg x s size |-- !!(size = length s).
+Proof.
+  revert s x.
+  induction size.
+  - simpl. entailer!.
+  - {
+      simpl. intros s x. Intros nxt v s'.
+      revert H0; case s.
+      - simpl; intro H1; case (@nil_cons _ v s' H1).
+      - {
+          intros v_2 s'_2 H1; pose proof (@cons_inv _ _ _ _ _ H1) as H2.
+          destruct H2 as [H3 H4].
+          rewrite H3; rewrite H4; clear H3 H4 H1 v_2 s'_2; simpl.
+          pose proof (@cancel_left (data_at Tsh (tarray (tptr tint) 2) [v; nxt] x) _  _ (IHsize s' nxt) ).
+          entailer!.
+        }
+    }
+Qed.
+Hint Resolve lseg_lenP : saturate_local.
+
+Lemma lseg_valid_pointer_or_nullP p s size:
+  lseg p s size |-- !! is_pointer_or_null p.
+Proof.
+  destruct size as [|size]; simpl.
+  - entailer!.
+  - Intros nxt v s'. entailer!.
+Qed.
+
+Hint Resolve lseg_valid_pointer_or_nullP : saturate_local.
+
+Lemma lseg_pointer_contentsP p s size:
+  lseg p s size |-- !!(p=nullval <-> s=nil).
+Proof.
+  destruct size as [|size]; simpl.
+  - entailer!; intuition.
+  - {
+      Intros nxt v s'.
+      entailer!.
+      split.
+      - intro H3; case (H H3).
+      - intro H3.
+        case (@nil_cons _ _ _ (@eq_sym _ _ _ H3 )).
+    }
+Qed.
+
+Hint Resolve lseg_pointer_contentsP : saturate_local.
+
+
+
+
 Definition listfree_spec :=
-   DECLARE _listfree
-  WITH s: list val, x: val, size: nat
-  PRE  [ _x OF (tptr (tptr tint)) ]
-    PROP(size = length s)
-    LOCAL(temp _x x)
-    SEP (lseg x s size)
-  POST [ Tvoid ]
-    PROP()
-    LOCAL()
-    SEP (emp).
+  DECLARE _listfree
+          WITH s: list val, x: val, size: nat
+                                            PRE  [ (tptr (tptr tint)) ]
+                                            PROP(size = length s)
+                                            PARAMS(x)
+                                            SEP (lseg x s size)
+                                            POST [ Tvoid ]
+                                            PROP()
+                                            LOCAL()
+                                            SEP (emp).
 
 (* Packaging the API spec all together. *)
 Definition Gprog : funspecs :=
@@ -109,24 +172,37 @@ Definition Gprog : funspecs :=
 (** Proof that f_listfree, the body of the listfree() function,
  ** satisfies listfree_spec, in the global context (Vprog,Gprog).
  **)
+From mathcomp Require Import ssreflect ssrbool ssrnat seq.
 
 Lemma body_listfree : semax_body Vprog Gprog f_listfree listfree_spec.
 Proof.
   start_function.
   forward_if.
-  - 
-    (*
-    move: PNx; subst v. clear H.
+  -
+    assert_PROP (x = (Vint (Int.repr 0))). {
+      admit.
+    }
+    by rewrite H; entailer!.
+    forward.
+    entailer.
+    subst v.
+    move: H0; clear; case: x; (try entailer!); auto.
+
+    revert H0 PNx.
+
+    move: PNx; clear H0.
     case: x=>//=[? ->/=|b pf _].
     apply: denote_tc_test_eq_split=>//.
     rewrite /valid_pointer /valid_pointer' /=.
-    Search _ (predicates_hered.prop (_ = _)).
-    Search _ (_ |-- _) (TT).
+
+
+    (* Search _ (predicates_hered.prop (_ = _)). *)
+    (* Search _ (_ |-- _) (TT). *)
     Check  denote_tc_test_eq.
-    have X: (denote_tc_test_eq (Vint Int.zero) (Vint (Int.repr 0)) = TT).
-    Search _ (denote_tc_test_eq).
-    Check (denote_tc_test_eq_split (lseg2 (Vint Int.zero) s) (Vint Int.zero) (Vint (Int.repr 0))).
-    by rewrite X; apply: TT_right. *)
+    have X: (denote_tc_test_eq (Vint Int.zero) (Vint (Int.repr 0)) = TT). admit.
+    (* Search _ (denote_tc_test_eq). *)
+    (* Check (denote_tc_test_eq_split (lseg2 (Vint Int.zero) s) (Vint Int.zero) (Vint (Int.repr 0))). *)
+    by rewrite X; apply: TT_right.
 
     move: PNx.
     
