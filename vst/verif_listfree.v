@@ -121,7 +121,7 @@ Proof.
         }
     }
 Qed.
-Hint Resolve lseg_lenP : saturate_local.
+
 
 Lemma lseg_valid_pointer_or_nullP p s size:
   lseg p s size |-- !! is_pointer_or_null p.
@@ -131,7 +131,13 @@ Proof.
   - Intros nxt v s'. entailer!.
 Qed.
 
-Hint Resolve lseg_valid_pointer_or_nullP : saturate_local.
+Lemma lseg_valid_pointerP p s size:
+  lseg p s size |-- valid_pointer p.
+Proof.
+  destruct size as [|size]; simpl.
+  - entailer!.
+  - Intros nxt v s'. entailer!.
+Qed.
 
 Lemma lseg_pointer_contentsP p s size:
   lseg p s size |-- !!(p=nullval <-> s=nil).
@@ -148,70 +154,112 @@ Proof.
     }
 Qed.
 
-Hint Resolve lseg_pointer_contentsP : saturate_local.
+Lemma lseg_size_negP p s size:
+  lseg p s size |-- !! ((p <> nullval) <-> (gt size 0)).
+Proof.
+  destruct size as [| size]; simpl.
+  - entailer!.
+    split.
+    intro H; case (H (eq_refl nullval)).
+    intro H; case (gt_irrefl 0 H).
+  -
+    Intros nxt v s'.
+    entailer!.
+    split.
+    intro; apply gt_Sn_O.
+    auto.
+Qed.
+    
 
+Lemma lseg_local_factsP p s size :
+  lseg p s size |-- !!( (size = length s) /\ ((p=nullval <-> s=nil) /\ ((is_pointer_or_null p) /\ (((p <> nullval) <-> (gt size 0)))))).
+Proof.
+  rewrite prop_and.
+  apply andp_right.
+  apply lseg_lenP.
+  rewrite prop_and.
+  apply andp_right.
+  apply lseg_pointer_contentsP.
+  rewrite prop_and.
+  apply andp_right.
+  apply lseg_valid_pointer_or_nullP.
+  apply lseg_size_negP.
+Qed.
 
+Lemma is_pointer_or_null_not_null:
+ forall x, is_pointer_or_null x -> x <> nullval -> isptr x.
+Proof.
+intros.
+ destruct x; try contradiction. hnf in H; subst i. contradiction H0; reflexivity.
+ apply I.
+Qed.
 
 
 Definition listfree_spec :=
   DECLARE _listfree
-          WITH s: list val, x: val, size: nat
-                                            PRE  [ (tptr (tptr tint)) ]
-                                            PROP(size = length s)
-                                            PARAMS(x)
-                                            SEP (lseg x s size)
-                                            POST [ Tvoid ]
-                                            PROP()
-                                            LOCAL()
-                                            SEP (emp).
+          WITH s: list val, x: val
+                                 PRE  [ (tptr (tptr tint)) ]
+                                 PROP()
+                                 PARAMS(x)
+                                 SEP (lseg x s (length s))
+                                 POST [ Tvoid ]
+                                 PROP()
+                                 LOCAL()
+                                 SEP (emp).
+
+Definition free_spec :=
+  DECLARE _free
+          WITH x: val, s: list val
+                              PRE  [ (tptr tvoid) ]
+                              PROP()
+                              PARAMS(x)
+                              SEP (data_at Tsh (tarray (tptr tint) 2) s x)
+                              POST [ Tvoid ]
+                              PROP()
+                              LOCAL()
+                              SEP (emp).
+
 
 (* Packaging the API spec all together. *)
 Definition Gprog : funspecs :=
-  ltac:(with_library prog [listfree_spec]).
+  ltac:(with_library prog [listfree_spec; free_spec]).
 
 (** Proof that f_listfree, the body of the listfree() function,
  ** satisfies listfree_spec, in the global context (Vprog,Gprog).
  **)
-From mathcomp Require Import ssreflect ssrbool ssrnat seq.
+From mathcomp Require Import ssreflect.
+Hint Resolve lseg_local_factsP : saturate_local.
 
 Lemma body_listfree : semax_body Vprog Gprog f_listfree listfree_spec.
 Proof.
-  start_function.
+  start_function. 
   forward_if.
-  -
-    assert_PROP (x = (Vint (Int.repr 0))). {
-      admit.
-    }
-    by rewrite H; entailer!.
-    forward.
-    entailer.
-    subst v.
-    move: H0; clear; case: x; (try entailer!); auto.
-
-    revert H0 PNx.
-
-    move: PNx; clear H0.
-    case: x=>//=[? ->/=|b pf _].
-    apply: denote_tc_test_eq_split=>//.
-    rewrite /valid_pointer /valid_pointer' /=.
-
-
-    (* Search _ (predicates_hered.prop (_ = _)). *)
-    (* Search _ (_ |-- _) (TT). *)
-    Check  denote_tc_test_eq.
-    have X: (denote_tc_test_eq (Vint Int.zero) (Vint (Int.repr 0)) = TT). admit.
-    (* Search _ (denote_tc_test_eq). *)
-    (* Check (denote_tc_test_eq_split (lseg2 (Vint Int.zero) s) (Vint Int.zero) (Vint (Int.repr 0))). *)
-    by rewrite X; apply: TT_right.
-
-    move: PNx.
-    
-    admit.
-  - unfold MORE_COMMANDS, abbreviate.
-    forward.
-    rewrite lseg_null.
+  (* first type checking - there's got to be a better way, but this seems to work! *)
+  - apply denote_tc_test_eq_split. clear H.
+    revert PNx; unfold is_pointer_or_null.
+    destruct x; (try case); (try by simpl).
+    unfold Archi.ptr64; move=>->; entailer!.
+    clear H1; case: s H0.
+    * move=> [_ H]; move: (H (eq_refl [])); by auto.
+    * move=> x xs _. simpl lseg.
+      Intros nxt y ys.
+      entailer!.
+    * entailer!.
+  - forward.
+    move: H0 => [H11 H12].
+    move: (H11 (eq_refl nullval)) => ->; simpl.
     entailer!.
-    exact PNx.
-  - Fail forward.
-    forward.
+  - assert_PROP ((Datatypes.length s) > 0)%nat.
+    entailer!. by apply H1.
+    case: s H0; first by simpl=>/gt_irrefl.
+    simpl lseg => y ys _.
+    Intros nxt v s'.
+    forward. (* _t = x[1] *)
+    forward. (* nxt2 = _t *)
+    deadvars!. (* drop temporary variable *)
+    forward_call (s', nxt).
+    * entailer!; rewrite H3; entailer!.
+    * forward_call (x, [v; nxt]).
+      entailer!.
 Qed.
+
