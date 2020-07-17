@@ -132,7 +132,7 @@ Proof.
 Qed.
 
 Lemma lseg_valid_pointerP p s size:
-  lseg p s size |-- valid_pointer p.
+  lseg p s size |--  valid_pointer p.
 Proof.
   destruct size as [|size]; simpl.
   - entailer!.
@@ -172,18 +172,20 @@ Qed.
     
 
 Lemma lseg_local_factsP p s size :
-  lseg p s size |-- !!( (size = length s) /\ ((p=nullval <-> s=nil) /\ ((is_pointer_or_null p) /\ (((p <> nullval) <-> (gt size 0)))))).
+  lseg p s size |-- !!( (size = length s) /\ ((p=nullval -> s=nil) /\
+                                              ((is_pointer_or_null p) /\
+                                               (((p <> nullval) -> (gt size 0)))))).
 Proof.
   rewrite prop_and.
   apply andp_right.
   apply lseg_lenP.
   rewrite prop_and.
   apply andp_right.
-  apply lseg_pointer_contentsP.
+  pose proof lseg_pointer_contentsP; entailer!; try destruct H0; entailer!.
   rewrite prop_and.
   apply andp_right.
   apply lseg_valid_pointer_or_nullP.
-  apply lseg_size_negP.
+  pose proof lseg_size_negP; entailer!; try destruct H0; entailer!.
 Qed.
 
 Lemma is_pointer_or_null_not_null:
@@ -228,29 +230,18 @@ Definition Gprog : funspecs :=
  ** satisfies listfree_spec, in the global context (Vprog,Gprog).
  **)
 From mathcomp Require Import ssreflect.
+Hint Resolve lseg_valid_pointerP: valid_pointer.
 Hint Resolve lseg_local_factsP : saturate_local.
 
 Lemma body_listfree : semax_body Vprog Gprog f_listfree listfree_spec.
 Proof.
   start_function. 
   forward_if.
-  (* first type checking - there's got to be a better way, but this seems to work! *)
-  - apply denote_tc_test_eq_split. clear H.
-    revert PNx; unfold is_pointer_or_null.
-    destruct x; (try case); (try by simpl).
-    unfold Archi.ptr64; move=>->; entailer!.
-    clear H1; case: s H0.
-    * move=> [_ H]; move: (H (eq_refl [])); by auto.
-    * move=> x xs _. simpl lseg.
-      Intros nxt y ys.
-      entailer!.
-    * entailer!.
   - forward.
-    move: H0 => [H11 H12].
-    move: (H11 (eq_refl nullval)) => ->; simpl.
+    (* x = null *)
+    move: (H0 (eq_refl nullval)) => ->; (* lseg (x, nil, 0) *) simpl.
     entailer!.
-  - assert_PROP ((Datatypes.length s) > 0)%nat.
-    entailer!. by apply H1.
+  - assert_PROP ((Datatypes.length s) > 0)%nat. { entailer!. }
     case: s H0; first by simpl=>/gt_irrefl.
     simpl lseg => y ys _.
     Intros nxt v s'.
