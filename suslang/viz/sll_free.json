@@ -1,0 +1,76 @@
+{"id":[],"tag":"OrNode","pp":"-","goal":{"id":"0","pre":"{sll(x, s)<_alpha_514>}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","x"]],"existentials":[],"ghosts":[["intset","s"],["card","_alpha_514"]]},"nChildren":-1,"cost":6}
+
+{"id":[0],"tag":"AndNode","pp":"Open","goal":null,"nChildren":2,"cost":-1}
+
+{"id":[0,0],"tag":"OrNode","pp":"Open.0","goal":{"id":"0-0.0","pre":"{s =i {} && x == 0 ; emp}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","x"]],"existentials":[],"ghosts":[["intset","s"],["card","_alpha_514"]]},"nChildren":-1,"cost":21}
+
+{"id":[0,0,0],"tag":"AndNode","pp":"Open.0-SubstL","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,0,0],"tag":"OrNode","pp":"Open.0-SubstL","goal":{"id":"0-0.1","pre":"{x == 0 ; emp}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","x"]],"existentials":[],"ghosts":[["intset","s"],["card","_alpha_514"]]},"nChildren":-1,"cost":21}
+
+{"id":[0,-1,0,0,0],"tag":"AndNode","pp":"Open.0-SubstL-WeakenPre","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,0,0],"tag":"OrNode","pp":"Open.0-SubstL-WeakenPre","goal":{"id":"0-0.2","pre":"{emp}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","x"]],"existentials":[],"ghosts":[["intset","s"],["card","_alpha_514"]]},"nChildren":-1,"cost":21}
+
+{"id":[-1,-1,0,-1,0,0,0],"tag":"AndNode","pp":"Open.0-SubstL-WeakenPre-Emp","goal":null,"nChildren":0,"cost":-1}
+
+{"at":[-1,-1,0,-1,0,0,0],"status":{"tag":"Succeeded"}}
+
+{"at":[-1,0,-1,0,0,0],"status":{"tag":"Succeeded"}}
+
+{"id":[1,0],"tag":"OrNode","pp":"Open.1","goal":{"id":"0-1.0","pre":"{_alpha_513x < _alpha_514 && not (x == 0) && s =i {vx} ++ s1x ; (x + 1) :-> nxtx ** x :-> vx ** sll(nxtx, s1x)<_alpha_513x>[0,1] ** [x, 2]}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","x"]],"existentials":[],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":21}
+
+{"id":[0,1,0],"tag":"AndNode","pp":"Open.1-SubstL","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,1,0],"tag":"OrNode","pp":"Open.1-SubstL","goal":{"id":"0-1.1","pre":"{_alpha_513x < _alpha_514 && not (x == 0) ; (x + 1) :-> nxtx ** x :-> vx ** sll(nxtx, s1x)<_alpha_513x>[0,1] ** [x, 2]}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","x"]],"existentials":[],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":21}
+
+{"id":[0,-1,0,1,0],"tag":"AndNode","pp":"Open.1-SubstL-Read","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,1,0],"tag":"OrNode","pp":"Open.1-SubstL-Read","goal":{"id":"0-1.2","pre":"{_alpha_513x < _alpha_514 && not (x == 0) ; (x + 1) :-> nxtx ** x :-> vx2 ** sll(nxtx, s1x)<_alpha_513x>[0,1] ** [x, 2]}","post":"{emp}","sketch":"  ??\n","programVars":[["int","vx2"],["loc","x"]],"existentials":[],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":21}
+
+{"id":[0,-1,0,-1,0,1,0],"tag":"AndNode","pp":"Open.1-SubstL-Read-Read","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,1,0],"tag":"OrNode","pp":"...(1)-SubstL-Read-Read","goal":{"id":"0-1.3","pre":"{_alpha_513x < _alpha_514 && not (x == 0) ; (x + 1) :-> nxtx2 ** x :-> vx2 ** sll(nxtx2, s1x)<_alpha_513x>[0,1] ** [x, 2]}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","nxtx2"],["int","vx2"],["loc","x"]],"existentials":[],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":21}
+
+{"id":[0,-1,0,-1,0,-1,0,1,0],"tag":"AndNode","pp":"...(1)-SubstL-Read-Read-AbduceCall","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,1,0],"tag":"OrNode","pp":"...(2)-Read-Read-AbduceCall","goal":{"id":"0-1.4","pre":"{_alpha_513x < _alpha_514 && not (x == 0) ; (x + 1) :-> nxtx2 ** x :-> vx2 ** sll(nxtx2, s1x)<_alpha_513x>[0,1] ** [x, 2]}","post":"{sll(x1, s1)<_alpha_5141>}","sketch":"  ??\n","programVars":[["loc","nxtx2"],["int","vx2"],["loc","x"]],"existentials":[["loc","x1"],["intset","s1"],["card","_alpha_5141"]],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":31}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"AndNode","pp":"...(2)-Read-Read-AbduceCall-HeapUnifyUnfold","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"OrNode","pp":"...(3)-Read-AbduceCall-HeapUnifyUnfold","goal":{"id":"0-1.5","pre":"{_alpha_513x < _alpha_514 && not (x == 0) ; (x + 1) :-> nxtx2 ** x :-> vx2 ** sll(nxtx2, s1x)<_alpha_513x>[0,1] ** [x, 2]}","post":"{_alpha_513x == _alpha_5141 && nxtx2 == x1 && s1 =i s1x ; sll(nxtx2, s1x)<_alpha_513x>}","sketch":"  ??\n","programVars":[["loc","nxtx2"],["int","vx2"],["loc","x"]],"existentials":[["loc","x1"],["card","_alpha_5141"],["intset","s1"]],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":31}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"AndNode","pp":"...(3)-Read-AbduceCall-HeapUnifyUnfold-SubstR","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"OrNode","pp":"...(4)-AbduceCall-HeapUnifyUnfold-SubstR","goal":{"id":"0-1.6","pre":"{_alpha_513x < _alpha_514 && not (x == 0) ; (x + 1) :-> nxtx2 ** x :-> vx2 ** sll(nxtx2, s1x)<_alpha_513x>[0,1] ** [x, 2]}","post":"{nxtx2 == x1 && s1 =i s1x ; sll(nxtx2, s1x)<_alpha_513x>}","sketch":"  ??\n","programVars":[["loc","nxtx2"],["int","vx2"],["loc","x"]],"existentials":[["loc","x1"],["intset","s1"]],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":31}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"AndNode","pp":"...(4)-AbduceCall-HeapUnifyUnfold-SubstR-SubstR","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"OrNode","pp":"...(5)-HeapUnifyUnfold-SubstR-SubstR","goal":{"id":"0-1.7","pre":"{_alpha_513x < _alpha_514 && not (x == 0) ; (x + 1) :-> nxtx2 ** x :-> vx2 ** sll(nxtx2, s1x)<_alpha_513x>[0,1] ** [x, 2]}","post":"{s1 =i s1x ; sll(nxtx2, s1x)<_alpha_513x>}","sketch":"  ??\n","programVars":[["loc","nxtx2"],["int","vx2"],["loc","x"]],"existentials":[["intset","s1"]],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":31}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"AndNode","pp":"...(5)-HeapUnifyUnfold-SubstR-SubstR-SubstR","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"OrNode","pp":"...(6)-SubstR-SubstR-SubstR","goal":{"id":"0-1.8","pre":"{_alpha_513x < _alpha_514 && not (x == 0) ; (x + 1) :-> nxtx2 ** x :-> vx2 ** sll(nxtx2, s1x)<_alpha_513x>[0,1] ** [x, 2]}","post":"{sll(nxtx2, s1x)<_alpha_513x>}","sketch":"  ??\n","programVars":[["loc","nxtx2"],["int","vx2"],["loc","x"]],"existentials":[],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":31}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"AndNode","pp":"...(6)-SubstR-SubstR-SubstR-FrameUnfold","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"OrNode","pp":"...(7)-SubstR-SubstR-FrameUnfold","goal":{"id":"0-1.9","pre":"{_alpha_513x < _alpha_514 && not (x == 0) ; (x + 1) :-> nxtx2 ** x :-> vx2 ** [x, 2]}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","nxtx2"],["int","vx2"],["loc","x"]],"existentials":[],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":31}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"AndNode","pp":"...(7)-SubstR-SubstR-FrameUnfold-Call","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"OrNode","pp":"...(8)-SubstR-FrameUnfold-Call","goal":{"id":"0-1.10","pre":"{_alpha_513x < _alpha_514 && not (x == 0) ; (x + 1) :-> nxtx2 ** x :-> vx2 ** [x, 2]}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","nxtx2"],["int","vx2"],["loc","x"]],"existentials":[],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":9}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"AndNode","pp":"...(8)-SubstR-FrameUnfold-Call-WeakenPre","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"OrNode","pp":"...(9)-FrameUnfold-Call-WeakenPre","goal":{"id":"0-1.11","pre":"{not (x == 0) ; (x + 1) :-> nxtx2 ** x :-> vx2 ** [x, 2]}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","nxtx2"],["int","vx2"],["loc","x"]],"existentials":[],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":9}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"AndNode","pp":"...(9)-FrameUnfold-Call-WeakenPre-Free","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"OrNode","pp":"...(10)-Call-WeakenPre-Free","goal":{"id":"0-1.12","pre":"{not (x == 0) ; emp}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","nxtx2"],["int","vx2"],["loc","x"]],"existentials":[],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":0}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"AndNode","pp":"...(10)-Call-WeakenPre-Free-WeakenPre","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"tag":"OrNode","pp":"...(11)-WeakenPre-Free-WeakenPre","goal":{"id":"0-1.13","pre":"{emp}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","nxtx2"],["int","vx2"],["loc","x"]],"existentials":[],"ghosts":[["intset","s1x"],["intset","s"],["loc","nxtx"],["card","_alpha_514"],["int","vx"],["card","_alpha_513x"]]},"nChildren":-1,"cost":0}
+
+{"at":[-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,1,0],"status":{"tag":"Succeeded","from":["cache"]}}
+

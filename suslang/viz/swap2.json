@@ -1,0 +1,64 @@
+{"id":[],"tag":"OrNode","pp":"-","goal":{"id":"0","pre":"{t :-> q ** x :-> a ** y :-> c ** z :-> b}","post":"{t :-> a ** x :-> q ** y :-> b ** z :-> c}","sketch":"  ??\n","programVars":[["loc","x"],["loc","z"],["loc","y"],["loc","t"]],"existentials":[],"ghosts":[["loc","c"],["loc","b"],["loc","a"],["loc","q"]]},"nChildren":-1,"cost":16}
+
+{"id":[0],"tag":"AndNode","pp":"*Partial","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0],"tag":"OrNode","pp":"*Partial","goal":{"id":"1","pre":"{not (t == x) && not (t == y) && not (t == z) && not (x == y) && not (x == z) && not (y == z) ; t :-> q ** x :-> a ** y :-> c ** z :-> b}","post":"{not (t == x) && not (t == y) && not (t == z) && not (x == y) && not (x == z) && not (y == z) ; t :-> a ** x :-> q ** y :-> b ** z :-> c}","sketch":"  ??\n","programVars":[["loc","x"],["loc","z"],["loc","y"],["loc","t"]],"existentials":[],"ghosts":[["loc","c"],["loc","b"],["loc","a"],["loc","q"]]},"nChildren":-1,"cost":16}
+
+{"id":[0,-1,0],"tag":"AndNode","pp":"*Partial-NilNotLval","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0],"tag":"OrNode","pp":"*Partial-NilNotLval","goal":{"id":"2","pre":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> q ** x :-> a ** y :-> c ** z :-> b}","post":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> a ** x :-> q ** y :-> b ** z :-> c}","sketch":"  ??\n","programVars":[["loc","x"],["loc","z"],["loc","y"],["loc","t"]],"existentials":[],"ghosts":[["loc","c"],["loc","b"],["loc","a"],["loc","q"]]},"nChildren":-1,"cost":16}
+
+{"id":[0,-1,0,-1,0],"tag":"AndNode","pp":"*Partial-NilNotLval-Read","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0],"tag":"OrNode","pp":"*Partial-NilNotLval-Read","goal":{"id":"3","pre":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> q ** x :-> a2 ** y :-> c ** z :-> b}","post":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> a2 ** x :-> q ** y :-> b ** z :-> c}","sketch":"  ??\n","programVars":[["loc","a2"],["loc","x"],["loc","z"],["loc","y"],["loc","t"]],"existentials":[],"ghosts":[["loc","c"],["loc","b"],["loc","a"],["loc","q"]]},"nChildren":-1,"cost":16}
+
+{"id":[0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"*Partial-NilNotLval-Read-Read","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(1)-NilNotLval-Read-Read","goal":{"id":"4","pre":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> q ** x :-> a2 ** y :-> c2 ** z :-> b}","post":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> a2 ** x :-> q ** y :-> b ** z :-> c2}","sketch":"  ??\n","programVars":[["loc","c2"],["loc","a2"],["loc","x"],["loc","z"],["loc","y"],["loc","t"]],"existentials":[],"ghosts":[["loc","c"],["loc","b"],["loc","a"],["loc","q"]]},"nChildren":-1,"cost":16}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(1)-NilNotLval-Read-Read-Read","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(2)-Read-Read-Read","goal":{"id":"5","pre":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> q ** x :-> a2 ** y :-> c2 ** z :-> b2}","post":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> a2 ** x :-> q ** y :-> b2 ** z :-> c2}","sketch":"  ??\n","programVars":[["loc","b2"],["loc","c2"],["loc","a2"],["loc","x"],["loc","z"],["loc","y"],["loc","t"]],"existentials":[],"ghosts":[["loc","c"],["loc","b"],["loc","a"],["loc","q"]]},"nChildren":-1,"cost":16}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(2)-Read-Read-Read-Read","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(3)-Read-Read-Read","goal":{"id":"6","pre":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> q2 ** x :-> a2 ** y :-> c2 ** z :-> b2}","post":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> a2 ** x :-> q2 ** y :-> b2 ** z :-> c2}","sketch":"  ??\n","programVars":[["loc","q2"],["loc","b2"],["loc","c2"],["loc","a2"],["loc","x"],["loc","z"],["loc","y"],["loc","t"]],"existentials":[],"ghosts":[["loc","c"],["loc","b"],["loc","a"],["loc","q"]]},"nChildren":-1,"cost":16}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(3)-Read-Read-Read-CheckPost","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(4)-Read-Read-CheckPost","goal":{"id":"7","pre":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> q2 ** x :-> a2 ** y :-> c2 ** z :-> b2}","post":"{t :-> a2 ** x :-> q2 ** y :-> b2 ** z :-> c2}","sketch":"  ??\n","programVars":[["loc","q2"],["loc","b2"],["loc","c2"],["loc","a2"],["loc","x"],["loc","z"],["loc","y"],["loc","t"]],"existentials":[],"ghosts":[["loc","c"],["loc","b"],["loc","a"],["loc","q"]]},"nChildren":-1,"cost":16}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(4)-Read-Read-CheckPost-HeapUnifyPure","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(4)-Read-Read-CheckPost-Write","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(5)-Read-CheckPost-Write","goal":{"id":"8","pre":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> q2 ** y :-> c2 ** z :-> b2}","post":"{t :-> a2 ** y :-> b2 ** z :-> c2}","sketch":"  ??\n","programVars":[["loc","q2"],["loc","b2"],["loc","c2"],["loc","a2"],["loc","x"],["loc","z"],["loc","y"],["loc","t"]],"existentials":[],"ghosts":[["loc","c"],["loc","b"],["loc","a"],["loc","q"]]},"nChildren":-1,"cost":12}
+
+{"id":[0,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(5)-Read-CheckPost-Write-HeapUnifyPure","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(5)-Read-CheckPost-Write-Write","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(6)-CheckPost-Write-Write","goal":{"id":"9","pre":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> q2 ** z :-> b2}","post":"{t :-> a2 ** z :-> c2}","sketch":"  ??\n","programVars":[["loc","q2"],["loc","b2"],["loc","c2"],["loc","a2"],["loc","x"],["loc","z"],["loc","y"],["loc","t"]],"existentials":[],"ghosts":[["loc","c"],["loc","b"],["loc","a"],["loc","q"]]},"nChildren":-1,"cost":8}
+
+{"id":[0,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(6)-CheckPost-Write-Write-HeapUnifyPure","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[1,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(6)-CheckPost-Write-Write-Write","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,1,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(7)-Write-Write-Write","goal":{"id":"10","pre":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; t :-> q2}","post":"{t :-> a2}","sketch":"  ??\n","programVars":[["loc","q2"],["loc","b2"],["loc","c2"],["loc","a2"],["loc","x"],["loc","z"],["loc","y"],["loc","t"]],"existentials":[],"ghosts":[["loc","c"],["loc","b"],["loc","a"],["loc","q"]]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,1,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(7)-Write-Write-Write-HeapUnifyPure","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[1,-1,1,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(7)-Write-Write-Write-Write","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,1,-1,1,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(8)-Write-Write-Write","goal":{"id":"11","pre":"{not (t == 0) && not (t == x) && not (t == y) && not (t == z) && not (x == 0) && not (x == y) && not (x == z) && not (y == 0) && not (y == z) && not (z == 0) ; emp}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","q2"],["loc","b2"],["loc","c2"],["loc","a2"],["loc","x"],["loc","z"],["loc","y"],["loc","t"]],"existentials":[],"ghosts":[["loc","c"],["loc","b"],["loc","a"],["loc","q"]]},"nChildren":-1,"cost":0}
+
+{"id":[0,-1,1,-1,1,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(8)-Write-Write-Write-WeakenPre","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,1,-1,1,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(9)-Write-Write-WeakenPre","goal":{"id":"12","pre":"{emp}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","q2"],["loc","b2"],["loc","c2"],["loc","a2"],["loc","x"],["loc","z"],["loc","y"],["loc","t"]],"existentials":[],"ghosts":[["loc","c"],["loc","b"],["loc","a"],["loc","q"]]},"nChildren":-1,"cost":0}
+
+{"id":[-1,-1,0,-1,1,-1,1,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(9)-Write-Write-WeakenPre-Emp","goal":null,"nChildren":0,"cost":-1}
+
+{"at":[-1,-1,0,-1,1,-1,1,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"status":{"tag":"Succeeded"}}
+
+{"at":[-1,0,-1,1,-1,1,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0],"status":{"tag":"Succeeded"}}
+
