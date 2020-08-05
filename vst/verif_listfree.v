@@ -7,8 +7,6 @@ Definition Vprog : varspecs. mk_varspecs prog. Defined.
 
 (*
 
-This proof doesn't compile!
-
 Key difficulties encountered while translating the SuSLik spec:
 - SuSLik's idealized memory model doesn't care about mixing types in a collection, while C does.
 
@@ -19,19 +17,6 @@ Key difficulties encountered while translating the SuSLik spec:
   with encoding them using Fixpoints.
 - To convince Coq that our fixpoints are well-founded, we needed to add a strictly decreasing size parameter - another
   deviation from the SuSLik spec.
-
-Possible next steps:
-- VST's powerful 'forward' and 'entailer!' tactics make extensive use of hint databases. A successful proof probably needs
-  us to add some lemmas related to the lseg fixpoint to the hint database.
-- A useful reference might be the '/progs/list_dt.v' file contained in the VST repository. It's a massive library of lemmas
-  that define a theory of linked list segments (albeit a slightly different definition than SuSLik's). Their version of lseg
-  is used to verify some programs, like 'progs/verif_append.v'. The question is, do we need to do something similar for every
-  inductive predicate definable in SuSLik, or is there a better way?
-
-*)
-
-(* Unsuccessful result below...... *)
-
 
 (* Functional spec of this program.  *)
 
@@ -88,6 +73,7 @@ Fixpoint lseg'''' (x: val) (s: list val) (size: nat) : mpred :=
     data_at Tsh (tptr tint) v x * data_at Tsh (tptr tint) nxt (offset_val 4 x) * lseg''' nxt s' size'
   | O  => !!(x = nullval) && !!(s = [])  && emp
   end.
+*)
 
 Fixpoint lseg (x: val) (s: list val) (size: nat) : mpred :=
   match size with
