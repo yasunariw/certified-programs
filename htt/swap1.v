@@ -8,25 +8,34 @@ From SSL
 Require Import core.
 
 Definition swap1_type :=
-  forall (x : ptr) (z : ptr) (y : ptr) (t : ptr),
-  {(a : nat) (b : nat) (q : nat) (c : nat)},
-    STsep (
-      fun h =>
-          h = x :-> a \+ y :-> c \+ z :-> b \+ t :-> q,
-      [vfun (_: unit) h =>
-          h = x :-> c \+ z :-> b \+ t :-> q \+ y :-> 41      ]).
+  forall (vprogs : ptr * ptr * ptr * ptr),
+  {(vghosts : ptr * ptr * ptr * ptr)},
+  STsep (
+    fun h =>
+      let: (x, z, y, t) := vprogs in
+      let: (q, a, b, c) := vghosts in
+      h = x :-> a \+ y :-> c \+ z :-> b \+ t :-> q,
+    [vfun (_: unit) h =>
+      let: (x, z, y, t) := vprogs in
+      let: (q, a, b, c) := vghosts in
+      h = x :-> c \+ z :-> b \+ t :-> q \+ y :-> 41
+    ]).
 Program Definition swap1 : swap1_type :=
-  fun x z y t =>
+  Fix (fun (swap1 : swap1_type) vprogs =>
+    let: (x, z, y, t) := vprogs in
     Do (
-  c2 <-- @read nat y;
-  x ::= c2;;
-  y ::= 41;;
-  ret tt    ).
+      c2 <-- @read ptr y;
+      x ::= c2;;
+      y ::= 41;;
+      ret tt
+    )).
+Obligation Tactic := intro; move=>[[[x z] y] t]; ssl_program_simpl.
 Next Obligation.
 ssl_ghostelim_pre.
-move=>[q [a [b c]]]//=.
-move=>[->].
-move=>H_valid.
+move=>[[[q2 a2] b2] c2].
+move=>[sigma_self].
+rewrite->sigma_self in *.
+ssl_ghostelim_post.
 ssl_read.
 ssl_write.
 ssl_write_post x.

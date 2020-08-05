@@ -8,26 +8,35 @@ From SSL
 Require Import core.
 
 Definition swap_type :=
-  forall (x : ptr) (y : ptr),
-  {(a : nat) (b : nat)},
-    STsep (
-      fun h =>
-          h = x :-> a \+ y :-> b,
-      [vfun (_: unit) h =>
-          h = x :-> b \+ y :-> a      ]).
+  forall (vprogs : ptr * ptr),
+  {(vghosts : ptr * ptr)},
+  STsep (
+    fun h =>
+      let: (x, y) := vprogs in
+      let: (a, b) := vghosts in
+      h = x :-> a \+ y :-> b,
+    [vfun (_: unit) h =>
+      let: (x, y) := vprogs in
+      let: (a, b) := vghosts in
+      h = x :-> b \+ y :-> a
+    ]).
 Program Definition swap : swap_type :=
-  fun x y =>
+  Fix (fun (swap : swap_type) vprogs =>
+    let: (x, y) := vprogs in
     Do (
-  a2 <-- @read nat x;
-  b2 <-- @read nat y;
-  x ::= b2;;
-  y ::= a2;;
-  ret tt    ).
+      a2 <-- @read ptr x;
+      b2 <-- @read ptr y;
+      x ::= b2;;
+      y ::= a2;;
+      ret tt
+    )).
+Obligation Tactic := intro; move=>[x y]; ssl_program_simpl.
 Next Obligation.
 ssl_ghostelim_pre.
-move=>[a b]//=.
-move=>[->].
-move=>H_valid.
+move=>[a2 b2].
+move=>[sigma_self].
+rewrite->sigma_self in *.
+ssl_ghostelim_post.
 ssl_read.
 ssl_read.
 ssl_write.
@@ -38,4 +47,3 @@ ssl_emp;
 ssl_emp_post.
 
 Qed.
-
