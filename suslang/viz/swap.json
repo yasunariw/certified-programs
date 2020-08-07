@@ -1,0 +1,44 @@
+{"id":[],"tag":"OrNode","pp":"-","goal":{"id":"0","pre":"{x :-> a ** y :-> b}","post":"{x :-> b ** y :-> a}","sketch":"  ??\n","programVars":[["loc","x"],["loc","y"]],"existentials":[],"ghosts":[["loc","a"],["loc","b"]]},"nChildren":-1,"cost":8}
+
+{"id":[0],"tag":"AndNode","pp":"*Partial","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0],"tag":"OrNode","pp":"*Partial","goal":{"id":"1","pre":"{not (x == y) ; x :-> a ** y :-> b}","post":"{not (x == y) ; x :-> b ** y :-> a}","sketch":"  ??\n","programVars":[["loc","x"],["loc","y"]],"existentials":[],"ghosts":[["loc","a"],["loc","b"]]},"nChildren":-1,"cost":8}
+
+{"id":[0,-1,0],"tag":"AndNode","pp":"*Partial-NilNotLval","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0],"tag":"OrNode","pp":"*Partial-NilNotLval","goal":{"id":"2","pre":"{not (x == 0) && not (x == y) && not (y == 0) ; x :-> a ** y :-> b}","post":"{not (x == 0) && not (x == y) && not (y == 0) ; x :-> b ** y :-> a}","sketch":"  ??\n","programVars":[["loc","x"],["loc","y"]],"existentials":[],"ghosts":[["loc","a"],["loc","b"]]},"nChildren":-1,"cost":8}
+
+{"id":[0,-1,0,-1,0],"tag":"AndNode","pp":"*Partial-NilNotLval-Read","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0],"tag":"OrNode","pp":"*Partial-NilNotLval-Read","goal":{"id":"3","pre":"{not (x == 0) && not (x == y) && not (y == 0) ; x :-> a2 ** y :-> b}","post":"{not (x == 0) && not (x == y) && not (y == 0) ; x :-> b ** y :-> a2}","sketch":"  ??\n","programVars":[["loc","a2"],["loc","x"],["loc","y"]],"existentials":[],"ghosts":[["loc","b"],["loc","a"]]},"nChildren":-1,"cost":8}
+
+{"id":[0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"*Partial-NilNotLval-Read-Read","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(1)-NilNotLval-Read-Read","goal":{"id":"4","pre":"{not (x == 0) && not (x == y) && not (y == 0) ; x :-> a2 ** y :-> b2}","post":"{not (x == 0) && not (x == y) && not (y == 0) ; x :-> b2 ** y :-> a2}","sketch":"  ??\n","programVars":[["loc","b2"],["loc","a2"],["loc","x"],["loc","y"]],"existentials":[],"ghosts":[["loc","b"],["loc","a"]]},"nChildren":-1,"cost":8}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(1)-NilNotLval-Read-Read-CheckPost","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(2)-Read-Read-CheckPost","goal":{"id":"5","pre":"{not (x == 0) && not (x == y) && not (y == 0) ; x :-> a2 ** y :-> b2}","post":"{x :-> b2 ** y :-> a2}","sketch":"  ??\n","programVars":[["loc","b2"],["loc","a2"],["loc","x"],["loc","y"]],"existentials":[],"ghosts":[["loc","b"],["loc","a"]]},"nChildren":-1,"cost":8}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(2)-Read-Read-CheckPost-HeapUnifyPure","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[1,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(2)-Read-Read-CheckPost-Write","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,1,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(3)-Read-CheckPost-Write","goal":{"id":"6","pre":"{not (x == 0) && not (x == y) && not (y == 0) ; y :-> b2}","post":"{y :-> a2}","sketch":"  ??\n","programVars":[["loc","b2"],["loc","a2"],["loc","x"],["loc","y"]],"existentials":[],"ghosts":[["loc","b"],["loc","a"]]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(3)-Read-CheckPost-Write-HeapUnifyPure","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(3)-Read-CheckPost-Write-Write","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(4)-CheckPost-Write-Write","goal":{"id":"7","pre":"{not (x == 0) && not (x == y) && not (y == 0) ; emp}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","b2"],["loc","a2"],["loc","x"],["loc","y"]],"existentials":[],"ghosts":[["loc","b"],["loc","a"]]},"nChildren":-1,"cost":0}
+
+{"id":[0,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(4)-CheckPost-Write-Write-WeakenPre","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(5)-Write-Write-WeakenPre","goal":{"id":"8","pre":"{emp}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","b2"],["loc","a2"],["loc","x"],["loc","y"]],"existentials":[],"ghosts":[["loc","b"],["loc","a"]]},"nChildren":-1,"cost":0}
+
+{"id":[-1,-1,0,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(5)-Write-Write-WeakenPre-Emp","goal":null,"nChildren":0,"cost":-1}
+
+{"at":[-1,-1,0,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0],"status":{"tag":"Succeeded"}}
+
+{"at":[-1,0,-1,1,-1,1,-1,0,-1,0,-1,0,-1,0,-1,0],"status":{"tag":"Succeeded"}}
+

@@ -1,0 +1,108 @@
+{"id":[],"tag":"OrNode","pp":"-","goal":{"id":"0","pre":"{r :-> 0}","post":"{m <= x && m <= y ; r :-> m}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[["int","m"]],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0],"tag":"AndNode","pp":"NilNotLval","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0],"tag":"OrNode","pp":"NilNotLval","goal":{"id":"1","pre":"{not (r == 0) ; r :-> 0}","post":"{m <= x && m <= y && not (r == 0) ; r :-> m}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[["int","m"]],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,0],"tag":"AndNode","pp":"NilNotLval-CheckPost","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0],"tag":"OrNode","pp":"NilNotLval-CheckPost","goal":{"id":"2","pre":"{not (r == 0) ; r :-> 0}","post":"{m <= x && m <= y ; r :-> m}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[["int","m"]],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,0,-1,0],"tag":"AndNode","pp":"NilNotLval-CheckPost-HeapUnifyPure","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[1,-1,0,-1,0],"tag":"AndNode","pp":"NilNotLval-CheckPost-Pick","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[2,-1,0,-1,0],"tag":"AndNode","pp":"NilNotLval-CheckPost-Pick","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[3,-1,0,-1,0],"tag":"AndNode","pp":"NilNotLval-CheckPost-Pick","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0],"tag":"OrNode","pp":"NilNotLval-CheckPost-HeapUnifyPure","goal":{"id":"3","pre":"{not (r == 0) ; r :-> 0}","post":"{m <= x && m <= y && m == 0 ; r :-> 0}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[["int","m"]],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"NilNotLval-CheckPost-HeapUnifyPure-SubstR","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(1)-CheckPost-HeapUnifyPure-SubstR","goal":{"id":"4","pre":"{not (r == 0) ; r :-> 0}","post":"{0 <= x && 0 <= y ; r :-> 0}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0],"tag":"AndNode","pp":"...(1)-CheckPost-HeapUnifyPure-SubstR-AbduceBranch","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0],"tag":"OrNode","pp":"...(2)-HeapUnifyPure-SubstR-AbduceBranch","goal":{"id":"5","pre":"{not (r == 0) ; r :-> 0}","post":"{false ; emp}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":3}
+
+{"at":[-1,0,-1,0,-1,0,-1,0,-1,0],"status":{"tag":"Failed"}}
+
+{"id":[-1,1,-1,0,-1,0],"tag":"OrNode","pp":"NilNotLval-CheckPost-Pick","goal":{"id":"3","pre":"{not (r == 0) ; r :-> 0}","post":"{x <= x && x <= y ; r :-> x}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"NilNotLval-CheckPost-Pick-AbduceBranch","goal":null,"nChildren":2,"cost":-1}
+
+{"id":[0,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(1)-CheckPost-Pick-AbduceBranch.0","goal":{"id":"3-0.0","pre":"{not (r == 0) && x <= y ; r :-> 0}","post":"{x <= x && x <= y ; r :-> x}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,0,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(1)-CheckPost-Pick-AbduceBranch.0-CheckPost","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,0,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(2)-Pick-AbduceBranch.0-CheckPost","goal":{"id":"3-0.1","pre":"{not (r == 0) && x <= y ; r :-> 0}","post":"{r :-> x}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,0,0,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(2)-Pick-AbduceBranch.0-CheckPost-HeapUnifyPure","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[1,-1,0,0,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(2)-Pick-AbduceBranch.0-CheckPost-Write","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,0,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(3)-AbduceBranch.0-CheckPost-HeapUnifyPure","goal":{"id":"3-0.2","pre":"{not (r == 0) && x <= y ; r :-> 0}","post":"{x == 0 ; r :-> 0}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,0,-1,0,0,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(3)-AbduceBranch.0-CheckPost-HeapUnifyPure-AbduceBranch","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,0,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(4)-CheckPost-HeapUnifyPure-AbduceBranch","goal":{"id":"3-0.3","pre":"{not (r == 0) && x <= y ; r :-> 0}","post":"{false ; emp}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"at":[-1,0,-1,0,-1,0,0,0,-1,1,-1,0,-1,0],"status":{"tag":"Failed"}}
+
+{"id":[-1,1,-1,0,0,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(3)-AbduceBranch.0-CheckPost-Write","goal":{"id":"3-0.2","pre":"{not (r == 0) && x <= y ; emp}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,1,-1,0,0,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(3)-AbduceBranch.0-CheckPost-Write-WeakenPre","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,1,-1,0,0,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(4)-CheckPost-Write-WeakenPre","goal":{"id":"3-0.3","pre":"{emp}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[-1,-1,0,-1,1,-1,0,0,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(4)-CheckPost-Write-WeakenPre-Emp","goal":null,"nChildren":0,"cost":-1}
+
+{"at":[-1,-1,0,-1,1,-1,0,0,0,-1,1,-1,0,-1,0],"status":{"tag":"Succeeded"}}
+
+{"at":[-1,0,-1,1,-1,0,0,0,-1,1,-1,0,-1,0],"status":{"tag":"Succeeded"}}
+
+{"id":[1,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(1)-CheckPost-Pick-AbduceBranch.1","goal":{"id":"0-1.0","pre":"{not (x <= y) ; r :-> 0}","post":"{m <= x && m <= y ; r :-> m}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[["int","m"]],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,1,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(1)-CheckPost-Pick-AbduceBranch.1-NilNotLval","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,1,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(2)-Pick-AbduceBranch.1-NilNotLval","goal":{"id":"0-1.1","pre":"{not (r == 0) && not (x <= y) ; r :-> 0}","post":"{m <= x && m <= y && not (r == 0) ; r :-> m}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[["int","m"]],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(2)-Pick-AbduceBranch.1-NilNotLval-CheckPost","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(3)-AbduceBranch.1-NilNotLval-CheckPost","goal":{"id":"0-1.2","pre":"{not (r == 0) && not (x <= y) ; r :-> 0}","post":"{m <= x && m <= y ; r :-> m}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[["int","m"]],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(3)-AbduceBranch.1-NilNotLval-CheckPost-HeapUnifyPure","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[1,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(3)-AbduceBranch.1-NilNotLval-CheckPost-PureSynthesisFinal","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(4)-NilNotLval-CheckPost-HeapUnifyPure","goal":{"id":"0-1.3","pre":"{not (r == 0) && not (x <= y) ; r :-> 0}","post":"{m <= x && m <= y && m == 0 ; r :-> 0}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[["int","m"]],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,0,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(4)-NilNotLval-CheckPost-HeapUnifyPure-SubstR","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(5)-CheckPost-HeapUnifyPure-SubstR","goal":{"id":"0-1.4","pre":"{not (r == 0) && not (x <= y) ; r :-> 0}","post":"{0 <= x && 0 <= y ; r :-> 0}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,0,-1,0,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(5)-CheckPost-HeapUnifyPure-SubstR-AbduceBranch","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,0,-1,0,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(6)-HeapUnifyPure-SubstR-AbduceBranch","goal":{"id":"0-1.5","pre":"{not (r == 0) && not (x <= y) ; r :-> 0}","post":"{false ; emp}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":3}
+
+{"at":[-1,0,-1,0,-1,0,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"status":{"tag":"Failed"}}
+
+{"id":[-1,1,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(4)-NilNotLval-CheckPost-PureSynthesisFinal","goal":{"id":"0-1.3","pre":"{not (r == 0) && not (x <= y) ; r :-> 0}","post":"{y <= x && y <= y ; r :-> y}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,1,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(4)-NilNotLval-CheckPost-PureSynthesisFinal-CheckPost","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,1,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(5)-CheckPost-PureSynthesisFinal-CheckPost","goal":{"id":"0-1.4","pre":"{not (r == 0) && not (x <= y) ; r :-> 0}","post":"{r :-> y}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":4}
+
+{"id":[0,-1,0,-1,1,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(5)-CheckPost-PureSynthesisFinal-CheckPost-HeapUnifyPure","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[1,-1,0,-1,1,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(5)-CheckPost-PureSynthesisFinal-CheckPost-Write","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,1,-1,0,-1,1,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(6)-PureSynthesisFinal-CheckPost-Write","goal":{"id":"0-1.5","pre":"{not (r == 0) && not (x <= y) ; emp}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":0}
+
+{"id":[0,-1,1,-1,0,-1,1,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"AndNode","pp":"...(6)-PureSynthesisFinal-CheckPost-Write-WeakenPre","goal":null,"nChildren":1,"cost":-1}
+
+{"id":[-1,0,-1,1,-1,0,-1,1,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"tag":"OrNode","pp":"...(7)-CheckPost-Write-WeakenPre","goal":{"id":"0-1.6","pre":"{emp}","post":"{emp}","sketch":"  ??\n","programVars":[["loc","r"],["int","x"],["int","y"]],"existentials":[],"ghosts":[]},"nChildren":-1,"cost":0}
+
+{"at":[-1,0,-1,1,-1,0,-1,1,-1,0,-1,0,1,0,-1,1,-1,0,-1,0],"status":{"tag":"Succeeded","from":["cache"]}}
+
