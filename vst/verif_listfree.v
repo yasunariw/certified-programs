@@ -47,6 +47,24 @@ Fail Fixpoint lseg (x: val) (null: val) (s: list val) : mpred :=
             lseg nxt null s'.
 
 
+(* Program Fixpoint lseg (x: val) (s: list val) (size:nat) {measure size} : mpred := *)
+(*   if eq_dec x nullval *)
+(*   then !!(x = nullval) && !! (s = []) && !!(size = O) && emp *)
+(*   else !! not(x = nullval) && *)
+(*           EX nxt:val, EX v:val,  EX s':(list val), *)
+(*             !!(s = v :: s') && *)
+(*             data_at Tsh (tptr tvoid) v x * *)
+(*             data_at Tsh (tptr tvoid) nxt (offset_val 4 x) * *)
+(*             lseg nxt s' (size - 1). *)
+(* Next Obligation. *)
+(* Proof. *)
+(*   pose (lseg nxt s' (size - 1)%nat). *)
+(*   revert m. induction size; try (simpl; rewrite Nat.sub_0_r; auto). *)
+(*   simpl. *)
+
+  
+
+
 (* This version is well-defined and thus accepted by Coq, but is invalid because it does not match lseg's specification *)
 Fixpoint lseg' (x: val) (null: val) (s: list val) : mpred :=
   match s with
