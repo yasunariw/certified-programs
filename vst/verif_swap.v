@@ -5,21 +5,20 @@ Instance CompSpecs : compspecs. make_compspecs prog. Defined.
 Definition Vprog : varspecs. mk_varspecs prog. Defined.
 
 (* Beginning of the API spec for the sumarray.c program *)
-Definition swap_spec : ident * funspec :=
-  DECLARE _swap
-   WITH x: val, y: val, a: Z, b: Z
-   PRE  [(tptr tint), (tptr tint)]
-   PROP ()
-   PARAMS(x;y)
-   SEP  (data_at Tsh tint (Vint (Int.repr a)) x; data_at Tsh tint (Vint (Int.repr b)) y)
-   POST [tvoid]
-         PROP ()
-         LOCAL()
-         SEP  (data_at Tsh tint (Vint (Int.repr b)) x; data_at Tsh tint (Vint (Int.repr a)) y).
 
-(** Instead of specifying the type of some arbitrary share sh in PROP,
- ** I could have used `Tsh`, the top share which gives total permission.
- **)
+Definition swap_spec :=
+  DECLARE _swap
+   WITH x: val, y: val, a: val, b: val
+   PRE [ (tptr (Tunion _sslval noattr)), (tptr (Tunion _sslval noattr)) ]
+   PROP( is_pointer_or_null(x); is_pointer_or_null(y); is_pointer_or_null(a); is_pointer_or_null(b) )
+   PARAMS(x; y)
+   SEP ((data_at Tsh (tarray (Tunion _sslval noattr) 1) [inr a] x); (data_at Tsh (tarray (Tunion _sslval noattr) 1) [inr b] y))
+   POST[ tvoid ]
+   PROP(  )
+   LOCAL()
+   SEP ((data_at Tsh (tarray (Tunion _sslval noattr) 1) [inr b] x); (data_at Tsh (tarray (Tunion _sslval noattr) 1) [inr a] y)).
+
+
 
 (* Packaging the API spec all together. *)
 Definition Gprog : funspecs :=
@@ -31,9 +30,9 @@ Definition Gprog : funspecs :=
 Lemma body_swap: semax_body Vprog Gprog f_swap swap_spec.
 Proof.
   start_function.
-  forward.
-  forward.
-  forward.
-  forward.
-  entailer!.
+  try forward.
+  try forward.
+  try forward.
+  try forward.
+  try entailer!.
 Qed.

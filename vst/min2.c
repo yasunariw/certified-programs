@@ -10,9 +10,12 @@ typedef union sslval {
 #define WRITE_INT(x,y,z) (*(x+y)).ssl_int = z
 
 
-void swap(loc x, loc y) {
-  loc a2 = READ_LOC(x,0);
-  loc b2 = READ_LOC(y,0);
-  WRITE_LOC(y,0,a2);
-  WRITE_LOC(x,0,b2);
+void min2(loc r, int x, int y) {
+  if((x <= y)) {
+    WRITE_INT(r, 0, x);
+    return;
+  } else {
+    WRITE_INT(r, 0, y);
+    return;
+  }
 }

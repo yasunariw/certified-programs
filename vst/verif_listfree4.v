@@ -4,6 +4,19 @@ Require Import listfree4.
 Instance CompSpecs : compspecs. make_compspecs prog. Defined.
 Definition Vprog : varspecs. mk_varspecs prog. Defined.
 
+Definition ssl_is_valid_int (x: val) := exists y, x = Vint (Int.repr y) /\  Int.min_signed <= y <= Int.max_signed.
+
+Ltac ssl_open_context :=
+  lazymatch goal with
+  | [ H:  ssl_is_valid_int ?x |- _ ] =>
+    let x1 := fresh x in
+    rename x into x1;
+    let H2 := fresh H in
+    let H3 := fresh H in
+    destruct H as [x [H2 H3]]; rewrite H2; ssl_open_context
+  | _ => idtac
+  end.
+
 Inductive lseg_card : Set :=
     | lseg_card_0 : lseg_card
     | lseg_card_1 : lseg_card -> lseg_card.
@@ -14,7 +27,9 @@ Fixpoint lseg (x: val) (s: (list val)) (self_card: lseg_card) : mpred := match s
       EX v : Z,
       EX s1 : (list val),
       EX nxt : val,
- !!(~ (x = nullval)) && !!(s = ([(Vint (Int.repr v))] ++ s1)) && (data_at Tsh (tarray (tptr tvoid) 2) [(Vint (Int.repr v)); nxt] x) * (lseg nxt s1 _alpha_513)
+               !!(~ (x = nullval)) && !!(s = ([(Vint (Int.repr v))] ++ s1)) &&
+               (data_at Tsh (tarray (Tunion _sslval noattr) 2)
+                        [inl (Vint (Int.repr v)); inr nxt] x) * (lseg nxt s1 _alpha_513)
 end.
 
 Lemma lseg_valid_pointer_or_nullP p s size:
@@ -94,7 +109,7 @@ Definition free_spec :=
 Definition listfree_spec :=
   DECLARE _listfree
    WITH x: val, s: (list val), _alpha_514: lseg_card
-   PRE [ (tptr tvoid) ]
+   PRE [ (tptr (Tunion _sslval noattr)) ]
    PROP( is_pointer_or_null(x) )
    PARAMS(x)
    SEP ((lseg x s _alpha_514))
@@ -110,17 +125,33 @@ Definition Gprog : funspecs :=
 (** Proof that f_listfree, the body of the listfree() function,
  ** satisfies listfree_spec, in the global context (Vprog,Gprog).
  **)
-From mathcomp Require Import ssreflect.
+
 Hint Resolve lseg_valid_pointerP: valid_pointer.
 Hint Resolve lseg_local_factsP : saturate_local.
+
+
 Ltac ssl_open :=
   match goal with
-  | [ X : ?x = ?x -> _ |- _ ] => move: (X (eq_refl x)) => ->; simpl
-  | [ Y : lseg_card, X : ?Y <> lseg_card_0 |- _ ] =>
-      let z := (fresh ) in
-      let zH := (fresh ) in
-      case: Y X; first (by intuition); last intros z zH
+  | [ X : ?x = ?x -> _ |- _ ] =>
+    let H := fresh in
+    pose proof (X (eq_refl x)) as H; rewrite H; clear H; simpl
   | _ => fail
+  end.
+Ltac ssl_dispatch_card :=
+      match goal with
+      | [ X : ?x, Y: ?x -> ?y <> ?z |- _]  =>
+        let H := fresh in
+        pose proof (Y X) as H; generalize H; try case y; try intuition; try eexists; auto
+      | _ => fail
+      end.
+
+Ltac ssl_card H name :=
+  match goal with
+    | [ H : _ = _ |- _] => rewrite H; simpl lseg
+    | [ H : exists _ : _, _ = _ |- _] =>
+      let g := fresh in
+      case H => name g; rewrite g; clear g; simpl lseg
+    | _ => fail
   end.
 
 
@@ -128,21 +159,16 @@ Lemma body_listfree : semax_body Vprog Gprog f_listfree listfree_spec.
 Proof.
   start_function. 
   forward_if.
-  - assert_PROP (_alpha_514 = lseg_card_0) as H1. {
-      entailer!. 
-    }
-    rewrite H1; simpl lseg.
-    forward; entailer!.
-  -
-    assert_PROP (exists alpha', (_alpha_514 = lseg_card_1 alpha')) as H2. {
-      entailer!. move: (H1 H0); case _alpha_514; try intuition. eexists; auto.
-    }
-    case: H2 => _alpha_515 ->; simpl lseg.
+  - assert_PROP (_alpha_514 = lseg_card_0) as H1. { entailer!; ssl_dispatch_card. }
+    ssl_card H1 none.
+    forward; entailer.
+  - assert_PROP (exists alpha', (_alpha_514 = lseg_card_1 alpha')) as H2. { entailer!; ssl_dispatch_card. }
+    ssl_card H2 _alpha_515.
     Intros vx s1x nxtx.
     assert_PROP (is_pointer_or_null nxtx) as Hnxtx. { entailer!. }
     forward.
     forward_call (nxtx, s1x, _alpha_515).
-    forward_call (tarray (tptr tvoid) 2, x).
+    forward_call (tarray (Tunion _sslval noattr) 2, x).
     forward.
 Qed.
 
